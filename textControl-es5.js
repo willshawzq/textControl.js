@@ -39,7 +39,13 @@ String.prototype.multiEllipsis = function (width, rows) {
     var font = arguments.length <= 2 || arguments[2] === undefined ? "12px Microsoft Yahei" : arguments[2];
     var ellipsis = arguments.length <= 3 || arguments[3] === undefined ? "..." : arguments[3];
 
-    return this.ellipsis(rows * width, font, ellipsis);
+    var temp = trimmed = this,
+        length = rows * width;
+    do {
+        temp = temp.substring(0, temp.length - 1);
+        trimmed = temp + ellipsis;
+    } while (trimmed.textWidth(font) > length);
+    return trimmed;
 };
 String.prototype.ellipsisInMiddle = function (length) {
     var pattern = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];

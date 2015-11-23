@@ -37,7 +37,13 @@ String.prototype.ellipsis = function(length, font = "12px Microsoft Yahei", elli
     return trimmed;
 };
 String.prototype.multiEllipsis = function(width, rows, font = "12px Microsoft Yahei", ellipsis = "...") {
-    return this.ellipsis(rows * width, font, ellipsis);
+    let temp = trimmed = this,
+        length = rows * width;
+     do {
+        temp = temp.substring(0, temp.length - 1);
+        trimmed = temp + ellipsis;
+    } while(trimmed.textWidth(font) > length);
+    return trimmed;
 };
 String.prototype.ellipsisInMiddle = function(length, pattern = 1, font = "12px Microsoft Yahei", ellipsis = "...") {
     if(this.textWidth(font) <= length ) return this;
